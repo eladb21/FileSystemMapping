@@ -18,13 +18,14 @@ class slowScannerModule():
                 path = root + os.sep + file
                 statFile = os.stat(path)
                 attributes = {}
-                if (win32api.GetFileAttributes(path) & win32con.FILE_ATTRIBUTE_HIDDEN):
+                attribute = win32api.GetFileAttributes(path)
+                if (attribute & win32con.FILE_ATTRIBUTE_HIDDEN):
                     attributes["hidden"] = 1
-                if (win32api.GetFileAttributes(path) & win32con.FILE_ATTRIBUTE_READONLY):
+                if (attribute & win32con.FILE_ATTRIBUTE_READONLY):
                     attributes["readOnly"] = 1
-                if (win32api.GetFileAttributes(path) & win32con.FILE_ATTRIBUTE_SYSTEM):
+                if (attribute & win32con.FILE_ATTRIBUTE_SYSTEM):
                     attributes["system"] = 1
-                if (win32api.GetFileAttributes(path) & win32con.FILE_ATTRIBUTE_TEMPORARY):
+                if (attribute & win32con.FILE_ATTRIBUTE_TEMPORARY):
                     attributes["temporary"] = 1
                 if(self.mongoClient.addInstance({ "Filename": splittedFile[0], "Full file path": path,
                                  "File extension": splittedFile[1], "File size": statFile.st_size,
