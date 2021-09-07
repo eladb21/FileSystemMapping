@@ -1,6 +1,17 @@
 import os
 import pymongo
+import multiprocessing as mp
 
+def foo(q):
+    q.put('hello')
+
+if __name__ == '__main__':
+    mp.set_start_method('spawn')
+    q = mp.Queue()
+    p = mp.Process(target=foo, args=(q,))
+    p.start()
+    print(q.get())
+    p.join()
 #import pymongo
 
 #myclient = pymongo.MongoClient("mongodb://localhost:27017/")
@@ -21,7 +32,7 @@ import pymongo
 
 
 #print(os.path.abspath(os.sep))
-for root, dirs, files in os.walk(os.path.abspath('.')):
-    print(root)
-    print(dirs)
-    print(files)
+#for root, dirs, files in os.walk(os.path.abspath('.')):
+#    print(root)
+#    print(dirs)
+#    print(files)
