@@ -1,5 +1,6 @@
 import os
 import mongoDbConnection as mdc
+import time
 
 class slowScannerModule():
     # os.path.abspath(os.sep) - From root
@@ -13,8 +14,8 @@ class slowScannerModule():
     def scanToDb(self):
         for root, dirs, files in os.walk(self.scanPath):
             for file in files:
-                query = self.mongoClient.createQuery(root, file)
-                if self.mongoClient.addInstance(query):
+                instance = self.mongoClient.createInstance(root, file)
+                if self.mongoClient.addInstance(instance):
                     print("1 row inserted")
 
                 else:
@@ -28,8 +29,9 @@ class slowScannerModule():
 
 
 
-
-#ssm = slowScannerModule()
-#ssm.scanToDb()
-#ssm.printAll()
-#ssm.deleteScan()
+a = time.time()
+ssm = slowScannerModule()
+ssm.scanToDb()
+ssm.printAll()
+ssm.deleteScan()
+print(time.time() - a)

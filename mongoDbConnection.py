@@ -21,7 +21,7 @@ class mongoModule:
         self.fileSystemCollection.drop()
         self.fileSystemCollection = self.db["fileSystemCollection"]
 
-    def createQuery(self, path, file):
+    def createInstance(self, path, file):
         splittedFile = os.path.splitext(file)
         filepath = os.path.join(path, file)
         statFile = os.stat(filepath)
