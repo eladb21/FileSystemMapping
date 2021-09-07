@@ -1,6 +1,7 @@
 import pymongo
 import os
 import win32api, win32con
+import datetime
 
 class mongoModule:
     def __init__(self):
@@ -25,27 +26,38 @@ class mongoModule:
         splittedFile = os.path.splitext(file)
         filepath = os.path.join(path, file)
         statFile = os.stat(filepath)
-        attributes = {}
+        attributes = []
         attribute = win32api.GetFileAttributes(filepath)
+        if (attribute & win32con.FILE_ATTRIBUTE_ARCHIVE):
+            attributes.append("archive")
+        if (attribute & win32con.FILE_ATTRIBUTE_COMPRESSED):
+            attributes.append("compressed")
+        if (attribute & win32con.FILE_ATTRIBUTE_DEVICE):
+            attributes.append("device")
+        if (attribute & win32con.FILE_ATTRIBUTE_ENCRYPTED):
+            attributes.append("encrypted")
+        if (attribute & win32con.FILE_ATTRIBUTE_NORMAL):
+            attributes.append("normal")
+        if (attribute & win32con.FILE_ATTRIBUTE_NOT_CONTENT_INDEXED):
+            attributes.append("not content indexed")
+        if (attribute & win32con.FILE_ATTRIBUTE_OFFLINE):
+            attributes.append("offline")
+        if (attribute & win32con.FILE_ATTRIBUTE_REPARSE_POINT):
+            attributes.append("reparse point")
+        if (attribute & win32con.FILE_ATTRIBUTE_SPARSE_FILE):
+            attributes.append("sparse file")
+        if (attribute & win32con.FILE_ATTRIBUTE_VIRTUAL):
+            attributes.append("virtual")
         if (attribute & win32con.FILE_ATTRIBUTE_HIDDEN):
-            attributes["hidden"] = 1
+            attributes.append("hidden")
         if (attribute & win32con.FILE_ATTRIBUTE_READONLY):
-            attributes["readOnly"] = 1
+            attributes.append("readOnly")
         if (attribute & win32con.FILE_ATTRIBUTE_SYSTEM):
-            attributes["system"] = 1
+            attributes.append("system")
         if (attribute & win32con.FILE_ATTRIBUTE_TEMPORARY):
-            attributes["temporary"] = 1
+            attributes.append("temporary")
         return {"Filename": splittedFile[0], "Full file path": filepath, "File extension": splittedFile[1],
-                "File size": statFile.st_size, "Creation date": statFile.st_ctime,
-                "Last modified date": statFile.st_mtime, "File attributes": attributes}
-
-#mm = mongoModule()
-
-
-#mydict = { "name": "Peter", "addr ess": "Lowstrsseet 27" }
-
-#mm.addInstance(mydict)
-
-#mm.printDb()
-
-#mm.cleanCol()
+                "File size": statFile.st_size,
+                "Creation date": datetime.datetime.fromtimestamp(statFile.st_ctime).strftime('%Y-%m-%d-%H:%M'),
+                "Last modified date": datetime.datetime.fromtimestamp(statFile.st_mtime).strftime('%Y-%m-%d-%H:%M'),
+                "File attributes": attributes}
