@@ -12,12 +12,33 @@ class mongoModule:
 
     def addInstance(self, query):
         ans = self.fileSystemCollection.insert_one(query)
+        print(query)
         return ans.acknowledged
 
     def printDb(self):
         doc = self.fileSystemCollection.find()
         for instance in doc:
             print(instance)
+
+    def searchByExtension(self, ext):
+        query = { "File extension": ext }
+        doc = self.fileSystemCollection.find(query).limit(50)
+        return doc
+
+    def searchByFilename(self, fn):
+        query = { "Filename": fn }
+        doc = self.fileSystemCollection.find(query, { "Full file path": 1 })
+        return doc
+
+    def searchByAttribute(self, attr):
+        query = {"File attributes": { "$in": [attr] } }
+        doc = self.fileSystemCollection.find(query, { "Filename": 1, "Full file path": 1 })
+        return doc
+
+    def searchFromModifyDate(self, lmd):###########################################
+        query = {"File extension": lmd}
+        doc = self.fileSystemCollection.find(query)
+        return doc
 
     def cleanCol(self):
         self.fileSystemCollection.drop()
