@@ -55,41 +55,44 @@ class mongoModule:
         self.fileSystemCollection = self.db["fileSystemCollection"]
 
     def createInstance(self, path, file):
-        #get file properties and create instance
+        #  get file properties and create instance
         splittedFile = os.path.splitext(file)
         filepath = os.path.join(path, file)
         statFile = os.stat(filepath)
         attributes = []
-        #get file attributes
-        attribute = win32api.GetFileAttributes(filepath)
-        if (attribute & win32con.FILE_ATTRIBUTE_ARCHIVE):
-            attributes.append("archive")
-        if (attribute & win32con.FILE_ATTRIBUTE_COMPRESSED):
-            attributes.append("compressed")
-        if (attribute & win32con.FILE_ATTRIBUTE_DEVICE):
-            attributes.append("device")
-        if (attribute & win32con.FILE_ATTRIBUTE_ENCRYPTED):
-            attributes.append("encrypted")
-        if (attribute & win32con.FILE_ATTRIBUTE_NORMAL):
-            attributes.append("normal")
-        if (attribute & win32con.FILE_ATTRIBUTE_NOT_CONTENT_INDEXED):
-            attributes.append("not content indexed")
-        if (attribute & win32con.FILE_ATTRIBUTE_OFFLINE):
-            attributes.append("offline")
-        if (attribute & win32con.FILE_ATTRIBUTE_REPARSE_POINT):
-            attributes.append("reparse point")
-        if (attribute & win32con.FILE_ATTRIBUTE_SPARSE_FILE):
-            attributes.append("sparse file")
-        if (attribute & win32con.FILE_ATTRIBUTE_VIRTUAL):
-            attributes.append("virtual")
-        if (attribute & win32con.FILE_ATTRIBUTE_HIDDEN):
-            attributes.append("hidden")
-        if (attribute & win32con.FILE_ATTRIBUTE_READONLY):
-            attributes.append("readOnly")
-        if (attribute & win32con.FILE_ATTRIBUTE_SYSTEM):
-            attributes.append("system")
-        if (attribute & win32con.FILE_ATTRIBUTE_TEMPORARY):
-            attributes.append("temporary")
+        #  get file attributes
+        try:
+            attribute = win32api.GetFileAttributes(filepath)
+            if (attribute & win32con.FILE_ATTRIBUTE_ARCHIVE):
+                attributes.append("archive")
+            if (attribute & win32con.FILE_ATTRIBUTE_COMPRESSED):
+                attributes.append("compressed")
+            if (attribute & win32con.FILE_ATTRIBUTE_DEVICE):
+                attributes.append("device")
+            if (attribute & win32con.FILE_ATTRIBUTE_ENCRYPTED):
+                attributes.append("encrypted")
+            if (attribute & win32con.FILE_ATTRIBUTE_NORMAL):
+                attributes.append("normal")
+            if (attribute & win32con.FILE_ATTRIBUTE_NOT_CONTENT_INDEXED):
+                attributes.append("not content indexed")
+            if (attribute & win32con.FILE_ATTRIBUTE_OFFLINE):
+                attributes.append("offline")
+            if (attribute & win32con.FILE_ATTRIBUTE_REPARSE_POINT):
+                attributes.append("reparse point")
+            if (attribute & win32con.FILE_ATTRIBUTE_SPARSE_FILE):
+                attributes.append("sparse file")
+            if (attribute & win32con.FILE_ATTRIBUTE_VIRTUAL):
+                attributes.append("virtual")
+            if (attribute & win32con.FILE_ATTRIBUTE_HIDDEN):
+                attributes.append("hidden")
+            if (attribute & win32con.FILE_ATTRIBUTE_READONLY):
+                attributes.append("readOnly")
+            if (attribute & win32con.FILE_ATTRIBUTE_SYSTEM):
+                attributes.append("system")
+            if (attribute & win32con.FILE_ATTRIBUTE_TEMPORARY):
+                attributes.append("temporary")
+        except:
+            pass
         return {"Filename": splittedFile[0], "Full file path": filepath, "File extension": splittedFile[1],
                 "File size": statFile.st_size,
                 "Creation date": datetime.datetime.fromtimestamp(statFile.st_ctime).strftime('%Y-%m-%d %H:%M:%S'),
