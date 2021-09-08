@@ -1,9 +1,9 @@
-from multiprocessing import freeze_support, Lock
+from multiprocessing import Lock
 from multiprocessing.pool import Pool
 from multiprocessing import JoinableQueue as Queue
 import mongoDbConnection as mdc
 import os
-import time
+
 
 class fastScannerModule():
     # os.path.abspath(os.sep) - From root
@@ -28,7 +28,7 @@ class fastScannerModule():
             else:
                 instance = self.mongoClient.createInstance(path, filename)
                 if self.mongoClient.addInstance(instance):
-                    print("1 row inserted")
+                    pass
                 else:
                     print("Failed to insert row")
         return directories
@@ -48,7 +48,6 @@ class fastScannerModule():
             for i in range(numProcesses):
                 pool.apply_async(self.parallelWorker())
         self.unsearched.join()
-        print("Done")
 
     def printAll(self):
         self.mongoClient.printDb()
@@ -57,11 +56,3 @@ class fastScannerModule():
         self.mongoClient.cleanCol()
 
 
-if __name__ == '__main__':
-    a = time.time()
-    freeze_support()
-    fsm = fastScannerModule()
-    fsm.start()
-    fsm.printAll()
-    fsm.deleteScan()
-    print(time.time() - a)
