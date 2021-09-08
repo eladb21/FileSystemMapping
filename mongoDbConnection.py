@@ -12,7 +12,6 @@ class mongoModule:
 
     def addInstance(self, query):
         ans = self.fileSystemCollection.insert_one(query)
-        print(query)
         return ans.acknowledged
 
     def printDb(self):
@@ -35,8 +34,8 @@ class mongoModule:
         doc = self.fileSystemCollection.find(query, { "Filename": 1, "Full file path": 1 })
         return doc
 
-    def searchFromModifyDate(self, lmd):###########################################
-        query = {"File extension": lmd}
+    def searchFromModifyDate(self, lmd):
+        query = {"Last modified date": { "$gte": lmd } }
         doc = self.fileSystemCollection.find(query)
         return doc
 
@@ -80,6 +79,6 @@ class mongoModule:
             attributes.append("temporary")
         return {"Filename": splittedFile[0], "Full file path": filepath, "File extension": splittedFile[1],
                 "File size": statFile.st_size,
-                "Creation date": datetime.datetime.fromtimestamp(statFile.st_ctime).strftime('%Y-%m-%d-%H:%M'),
-                "Last modified date": datetime.datetime.fromtimestamp(statFile.st_mtime).strftime('%Y-%m-%d-%H:%M'),
+                "Creation date": datetime.datetime.fromtimestamp(statFile.st_ctime).strftime('%Y-%m-%d %H:%M:%S'),
+                "Last modified date": datetime.datetime.fromtimestamp(statFile.st_mtime).strftime('%Y-%m-%d %H:%M:%S'),
                 "File attributes": attributes}

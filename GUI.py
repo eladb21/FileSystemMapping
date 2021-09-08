@@ -31,13 +31,36 @@ class GUI():
 
         def queriesFunc(event, dict):
             if event == 'ext':
-                ans=8
+                ans = self.mongoClient.searchByExtension(dict['-EXT-'])
+                if ans.count() != 0:
+                    for inst in ans:
+                        print(inst)
+                else:
+                    print("Empty results")
+
             elif event == 'fn':
-                ans=8
+                ans = self.mongoClient.searchByFilename(dict['-F_N-'])
+                if ans.count() != 0:
+                    for inst in ans:
+                        print(inst)
+                else:
+                    print("Empty results")
+
             elif event == 'lmd':
-                ans=8
+                ans = self.mongoClient.searchFromModifyDate(dict['-LMD-'])
+                if ans.count() != 0:
+                    for inst in ans:
+                        print(inst)
+                else:
+                    print("Empty results")
+                    
             elif event == 'attr':
-                ans=8
+                ans = self.mongoClient.searchByAttribute(dict['-ATTR-'])
+                if ans.count() != 0:
+                    for inst in ans:
+                        print(inst)
+                else:
+                    print("Empty results")
 
         sg.theme('Topanga')
         # Add some color to the window
@@ -51,7 +74,7 @@ class GUI():
                     [sg.Text("Search by file name")],
                     [sg.Input(key='-F_N-')],
                     [sg.Button('By file name', key='fn')],
-                    [sg.Text("Search from last modified date - (YYYY/MM/DD)")],
+                    [sg.Text("Search from last modified date - (format: YYYY-MM-DD)")],
                     [sg.Input(key='-LMD-')],
                     [sg.Button('From modified date', key='lmd')],
                     [sg.Text("Search by attribute - (hidden, system, etc.)")],
