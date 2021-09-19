@@ -7,28 +7,25 @@ Scan windows filesystem to mongoDB
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install libraries.
 
 ```bash
-pip install foobar
+pip install PySimpleGUI
+pip install multiprocess
+pip install os-sys
+pip install pymongo
+pip install pywin32
+pip install DateTime
 ```
+
+install mongoDB (https://docs.mongodb.com/guides/server/install/)
 
 ## Usage
 
-```python
-import foobar
+Use GUI for scanning your windows file system into DB then search files with the query section
 
-# returns 'words'
-foobar.pluralize('word')
+## Fast scanning
+Option for multi-core device, scanning file-system using parallel computing
 
-# returns 'geese'
-foobar.pluralize('goose')
-
-# returns 'phenomenon'
-foobar.singularize('phenomena')
-```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
+## Slow scanning
+Normal option - scan your files one by one
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
