@@ -15,7 +15,7 @@ pip install pywin32
 pip install DateTime
 ```
 
-install mongoDB (https://docs.mongodb.com/guides/server/install/)
+install [mongoDB](https://docs.mongodb.com/guides/server/install/)
 
 ## Usage
 
