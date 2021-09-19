@@ -18,8 +18,8 @@ pip install DateTime
 install [mongoDB](https://docs.mongodb.com/guides/server/install/)
 
 ## Usage
-
-Use GUI for scanning your windows file system into DB then search files with the query section
+  - Use GUI for scanning your windows file-system into DB then wait for 'Done' pop-up
+  - Search files with the query section
 
 ## Fast scanning
 Option for multi-core device, scanning file-system using parallel computing
