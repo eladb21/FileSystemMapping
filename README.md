@@ -28,4 +28,4 @@ Option for multi-core device, scanning file-system using parallel computing
 Normal option - scan your files one by one
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://github.com/eladb21/FileSystemMapping/blob/master/LICENSE/)
